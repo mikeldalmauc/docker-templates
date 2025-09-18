@@ -1,0 +1,32 @@
+services:
+  jellyfin:
+    image: jellyfin/jellyfin:latest
+    container_name: jellyfin
+    user: "1000:1000"                  # tu UID:GID
+    ports:
+      - "8096:8096"
+    environment:
+      - TZ=Europe/Madrid
+    volumes:
+      - ./config:/config
+      - ./cache:/cache
+      - ./media:/media
+    restart: unless-stopped
+
+  dufs:
+    image: sigoden/dufs:latest
+    container_name: dufs
+    user: "1000:1000"
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./media:/media
+    # Permisos: admin RW, viewer solo lectura (RO). Sin ':r'.
+    # Evito '-A' para que los permisos de cuentas manden y no haya confusión.
+    command: ["/media",
+              "--allow-upload", "--allow-delete", "--allow-search", "--allow-archive",
+              "-a", "admin:admin@/:rw",
+              "-a", "viewer:LEER_UNICAMENTE@/:ro"]
+    environment:
+      - TZ=Europe/Madrid
+    restart: unless-stopped

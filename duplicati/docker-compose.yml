@@ -1,0 +1,21 @@
+services:
+
+  duplicati:
+    image: lscr.io/linuxserver/duplicati:latest
+    container_name: duplicati
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Madrid
+      - SETTINGS_ENCRYPTION_KEY=somekey8charslong
+      - CLI_ARGS= #optional
+      - DUPLICATI__WEBSERVICE_PASSWORD=password
+    volumes:
+      - duplicati-config:/config
+      # Path to your backup files on the host
+    ports:
+      - 8200:8200
+    restart: unless-stopped
+
+volumes:
+  duplicati-config:
