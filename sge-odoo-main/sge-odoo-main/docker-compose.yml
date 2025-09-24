@@ -1,5 +1,4 @@
 services:
-
   web:
     image: odoo:17.0
     depends_on:
@@ -8,18 +7,18 @@ services:
       - "8069:8069"
     volumes:
       - odoo-web-data:/var/lib/odoo
-      - ./config:/etc/odoo
+      - ./config:/etc/odoo           # aquí debe existir odoo.conf
       - ./addons:/mnt/extra-addons
     environment:
-      - PASSWORD_FILE=/run/secrets/postgresql_password
+      - HOST=db                      # opcional
+      - TZ=Europe/Madrid
     secrets:
       - postgresql_password
 
   db:
     image: postgres:15
     environment:
-      - POSTGRES_HOST=db
-      - POSTGRES_DB=miempresadb
+      - POSTGRES_DB=postgres
       - POSTGRES_PASSWORD_FILE=/run/secrets/postgresql_password
       - POSTGRES_USER=odoo
       - PGDATA=/var/lib/postgresql/data/pgdata
@@ -34,13 +33,12 @@ services:
     restart: always
     environment:
       PGADMIN_DEFAULT_EMAIL: odoo@gmail.com
-      PGADMIN_DEFAULT_USER: odoo
       PGADMIN_DEFAULT_PASSWORD: odoo
       PGADMIN_LISTEN_PORT: 80
     ports:
-       - 8080:80
-    links:
-       - "db:pgsql-server"
+      - "8080:80"
+    depends_on:
+      - db
 
 volumes:
   odoo-web-data:

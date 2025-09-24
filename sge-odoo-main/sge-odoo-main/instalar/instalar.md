@@ -26,7 +26,7 @@ https://github.com/FPTxurdinagaDAM/sge-odoo
 
 ### Crear un fichero para la contraseña :lock_with_ink_pen:
 
-Tal y como se puede ver en fichero `docker-compose.yml`  se extrae la contraseña de un fichero de texto plano llamado `postresql_password`. Crea el fichero con dicho nombre e introduce una única palabra con la contraseña deseada.
+Tal y como se puede ver en fichero `docker-compose.yml`  se extrae la contraseña de un fichero de texto plano llamado `postgresql_password`. Crea el fichero con dicho nombre e introduce una única palabra con la contraseña deseada.
 
 :warning: *Por motivos de simplicidad se utiliza la misma contraseña tanto para la base de datos como para la aplicación web. Se recomienda hacer una distinción aquí en producción.*
 

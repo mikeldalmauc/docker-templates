@@ -1,6 +1,3 @@
-odoo_pg_pass
-addons
 odoo-db-data
 odoo-web-data
-config
 postgresql_password
